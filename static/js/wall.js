@@ -3,7 +3,36 @@ $(document).ready(function () {
     // tags loads the JS. By putting this inside a jQuery $(document).ready()
     // function, this code only gets run when the document finishing loading.
 
+
     $("#message-form").submit(handleFormSubmit);
+
+    // Here's what /api/wall/list returns when you load it (or get it, in this case): {"messages": [{"message": "Hello World"}, {"message": "Here's another message for us"}, {"message": "None"}], "result": "OK"}
+
+    // $.get("/api/wall/list", function (result){});
+    
+    function makeJSONLookNormal(){
+        $.get("/api/wall/list", function (result){
+       
+        var msgs = result['messages'];
+
+        $("#message-container").empty();
+
+            for (var i = 0; i < msgs.length; i++){
+                $("#message-container").prepend("<li class='list-group-item'>" + msgs[i]['message'] + "</li>");
+            }
+
+            $("#message-clear").click(function(){
+                $.get("/clearmessages");
+                location.reload();
+            });
+        
+        });
+        
+        
+    }
+
+    makeJSONLookNormal();
+
 });
 
 
@@ -23,7 +52,7 @@ function handleFormSubmit(evt) {
     textArea.val("");
 }
 
-
+    
 /**
  * Makes AJAX call to the server and the message to it.
  */
@@ -37,7 +66,6 @@ function addMessage(msg) {
         }
     );
 }
-
 
 /**
  * This is a helper function that does nothing but show a section of the

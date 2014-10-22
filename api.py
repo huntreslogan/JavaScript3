@@ -57,5 +57,5 @@ def wall_add(msg):
 
     result = wall_list()
     result["result"] = "Message Received"
-
+ 
     return result

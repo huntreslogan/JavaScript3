@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, session, redirect
 
 from api import wall_list, wall_add, wall_error
 
@@ -15,10 +15,15 @@ app = Flask(__name__)
 # fine to have this here.
 app.secret_key = 'a4c96d59-57a8-11e4-8b97-80e6500ee2f6'
 
+@app.route("/clearmessages")
+def clearMessages():
+    session.clear()
+    return redirect("/") 
 
 @app.route("/")
 def index():
-    """Return index page."""
+    """Return index page.""" 
+    print "This is a session %r" % session
     return render_template("wall.html")
 
 
