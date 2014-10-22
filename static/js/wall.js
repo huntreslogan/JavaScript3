@@ -26,6 +26,11 @@ $(document).ready(function () {
                 location.reload();
             });
         
+            //  $("#message-send").click(function(){
+            //     $.get("/reloadmessages");
+            //     location.reload();
+            // });
+        
         });
         
         

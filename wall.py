@@ -20,6 +20,11 @@ def clearMessages():
     session.clear()
     return redirect("/") 
 
+# @app.route("/reloadmessages")
+# def reloadMessages(): 
+#     pass
+#     # return redirect("/") 
+
 @app.route("/")
 def index():
     """Return index page.""" 
