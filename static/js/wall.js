@@ -8,17 +8,15 @@ $(document).ready(function () {
 
     // Here's what /api/wall/list returns when you load it (or get it, in this case): {"messages": [{"message": "Hello World"}, {"message": "Here's another message for us"}, {"message": "None"}], "result": "OK"}
     // We attempted to create a method in wall.py to clear the session and it does seem to clear our <li> but then the next time we submit our new message it submits it and the last message that was supposed to be cleared
-    $("#message-clear").click(function(){
-                $.get("/clearmessages");
-                location.reload();
-            });
-    
+    $("#message-clear").click(clearMessages);
+    $("#message-container").empty();
+
 
 });
 
 function makeJSONLookNormal(){
         $.get("/api/wall/list", function (result){
-       
+
         var msgs = result['messages'];
 
         $("#message-container").empty();
@@ -31,15 +29,15 @@ function makeJSONLookNormal(){
             //     $.get("/clearmessages");
             //     location.reload();
             // });
-        
+
             //  $("#message-send").click(function(){
             //     $.get("/reloadmessages");
             //     location.reload();
             // });
-        
+
         });
-        
-        
+
+
     }
 
 
@@ -59,7 +57,7 @@ function handleFormSubmit(evt) {
     textArea.val("");
 }
 
-    
+
 /**
  * Makes AJAX call to the server and the message to it.
  */
@@ -75,7 +73,13 @@ function addMessage(msg) {
     );
 
 }
-
+function clearMessages() {
+ //       alert("in clearMessages");
+    $("#message-container").empty();
+    $.post('api/wall/clear',
+        makeJSONLookNormal
+        );
+}
 /**
  * This is a helper function that does nothing but show a section of the
  * site (the message result) and then hide it a moment later.

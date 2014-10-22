@@ -1,8 +1,8 @@
 import json
 
-from flask import Flask, request, render_template, make_response, session, redirect
+from flask import Flask, request, render_template, url_for, make_response, session, redirect
 
-from api import wall_list, wall_add, wall_error
+from api import wall_list, wall_add, wall_error, wall_clear
 
 
 app = Flask(__name__)
@@ -15,20 +15,16 @@ app = Flask(__name__)
 # fine to have this here.
 app.secret_key = 'a4c96d59-57a8-11e4-8b97-80e6500ee2f6'
 
-@app.route("/clearmessages")
-def clearMessages():
-    session.clear()
-    print session
-    return redirect("/") 
+
 
 # @app.route("/reloadmessages")
-# def reloadMessages(): 
+# def reloadMessages():
 #     pass
-#     # return redirect("/") 
+#     # return redirect("/")
 
 @app.route("/")
 def index():
-    """Return index page.""" 
+    """Return index page."""
     print "This is a session %r" % session
     return render_template("wall.html")
 
@@ -85,7 +81,11 @@ def add_message():
 
     return _convert_to_JSON(result)
 
-
+@app.route("/api/wall/clear", methods=['POST'])
+def clear_message():
+    """Clears messages and returns an empty list"""
+    wall_clear()
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True)

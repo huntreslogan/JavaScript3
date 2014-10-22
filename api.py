@@ -53,9 +53,14 @@ def wall_add(msg):
         "message": msg,
     }
 
+
     session.setdefault('wall', []).append(wall_dict)
 
     result = wall_list()
     result["result"] = "Message Received"
- 
+    print session
     return result
+
+def wall_clear():
+    return {"result": "Cleared Messages",
+        "messages": session.clear()}
