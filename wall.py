@@ -18,6 +18,7 @@ app.secret_key = 'a4c96d59-57a8-11e4-8b97-80e6500ee2f6'
 @app.route("/clearmessages")
 def clearMessages():
     session.clear()
+    print session
     return redirect("/") 
 
 # @app.route("/reloadmessages")
