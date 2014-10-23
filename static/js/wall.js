@@ -5,8 +5,7 @@ $(document).ready(function () {
 
 
     $("#message-form").submit(handleFormSubmit);
-
-    // Here's what /api/wall/list returns when you load it (or get it, in this case): {"messages": [{"message": "Hello World"}, {"message": "Here's another message for us"}, {"message": "None"}], "result": "OK"}
+         // Here's what /api/wall/list returns when you load it (or get it, in this case): {"messages": [{"message": "Hello World"}, {"message": "Here's another message for us"}, {"message": "None"}], "result": "OK"}
     // We attempted to create a method in wall.py to clear the session and it does seem to clear our <li> but then the next time we submit our new message it submits it and the last message that was supposed to be cleared
     $("#message-clear").click(clearMessages);
     $("#message-container").empty();
@@ -25,16 +24,6 @@ function makeJSONLookNormal(){
                 $("#message-container").prepend("<li class='list-group-item'>" + msgs[i]['message'] + "</li>");
             }
 
-            // $("#message-clear").click(function(){
-            //     $.get("/clearmessages");
-            //     location.reload();
-            // });
-
-            //  $("#message-send").click(function(){
-            //     $.get("/reloadmessages");
-            //     location.reload();
-            // });
-
         });
 
 
@@ -44,6 +33,7 @@ function makeJSONLookNormal(){
 /**
  * Handle submission of the form.
  */
+
 function handleFormSubmit(evt) {
     evt.preventDefault();
 
@@ -55,6 +45,11 @@ function handleFormSubmit(evt) {
 
     // Reset the message container to be empty
     textArea.val("");
+    $("#message-send").prop('disabled', true);
+    setTimeout (function(){
+        $("#message-send").prop('disabled', false);
+    },2000);
+
 }
 
 
